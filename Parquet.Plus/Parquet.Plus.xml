@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Parquet.Plus</name>
+    </assembly>
+    <members>
+        <member name="T:Parquet.Plus.Extensions.ParquetExtensions">
+            <summary>
+            Parquet extensions
+            </summary>
+        </member>
+        <member name="M:Parquet.Plus.Extensions.ParquetExtensions.BuildSetter``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Creates setter method from column to property 
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <typeparam name="TProperty">Type of property, also column</typeparam>
+            <param name="propertySelector">Target property selector</param>
+            <returns>Setter method from column to property</returns>
+        </member>
+        <member name="M:Parquet.Plus.Extensions.ParquetExtensions.BuildSetter``3(System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Linq.Expressions.Expression{System.Func{``2,``1}})">
+            <summary>
+            Creates setter method from column to property with different types
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <typeparam name="TProperty">Type of property</typeparam>
+            <typeparam name="TColumn">Type of column</typeparam>
+            <param name="propertySelector">Target property selector</param>
+            <param name="mapperToPropertyExp">Mapper expression</param>
+            <returns>Setter method from column to property</returns>
+        </member>
+        <member name="M:Parquet.Plus.Extensions.ParquetExtensions.BuildGetter``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Creates getter method from property to column
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <typeparam name="TProperty">Type of property, also column</typeparam>
+            <param name="propertySelector">Source property selector</param>
+            <returns>Getter method from property to column</returns>
+        </member>
+        <member name="M:Parquet.Plus.Extensions.ParquetExtensions.BuildGetter``3(System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Linq.Expressions.Expression{System.Func{``1,``2}})">
+            <summary>
+            Creates geter method from property to column with different types
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <typeparam name="TProperty">Type of property</typeparam>
+            <typeparam name="TColumn">Type of column</typeparam>
+            <param name="propertySelector">Source property selector</param>
+            <param name="mapperToColumnExp">Mapper extension</param>
+            <returns>Getter method from property to column</returns>
+        </member>
+        <member name="T:Parquet.Plus.Mapping.MapperConfig`1">
+            <summary>
+            Mapping config for properties
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.#ctor">
+            <summary>
+            Mapping config for properties
+            </summary>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.MapProperty``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String)">
+            <summary>
+            Adds property mapping info
+            </summary>
+            <typeparam name="TProperty">Type of property, also column</typeparam>
+            <param name="propertySelector">Target property selector</param>
+            <param name="columnName">Column name</param>
+            <returns>Itself</returns>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.MapProperty``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String,System.Func{``0,``1},System.Func{``1,``0})">
+            <summary>
+            Adds property mapping info with different types
+            </summary>
+            <typeparam name="TProperty">Type of property</typeparam>
+            <typeparam name="TColumn">Type of column</typeparam>
+            <param name="propertySelector">Target property selector</param>
+            <param name="columnName">Column name</param>
+            <param name="mapperToColumn">Mapper from property to column</param>
+            <param name="mapperToProperty">Mapper from column to property</param>
+            <returns>Itself</returns>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.MapFromColumn(`0[],Parquet.Data.DataColumn,System.Int64)">
+            <summary>
+            Writes info from column to models
+            </summary>
+            <param name="models">Target models</param>
+            <param name="dataColumn">Parquet column with data</param>
+            <param name="modelOffset">Model offset, for multiple row groups</param>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.ToDataColumns(`0[])">
+            <summary>
+            Makes parquet columns from models
+            </summary>
+            <param name="models">Models with data</param>
+            <returns>Parquet columns</returns>
+        </member>
+        <member name="T:Parquet.Plus.ParquetDataEngine">
+            <summary>
+            Works with parquet data
+            </summary>
+        </member>
+        <member name="M:Parquet.Plus.ParquetDataEngine.#ctor">
+            <summary>
+            Works with parquet data
+            </summary>
+        </member>
+        <member name="M:Parquet.Plus.ParquetDataEngine.Read``1(Parquet.Plus.Mapping.MapperConfig{``0},System.String)">
+            <summary>
+            Reads data from parquet file
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <param name="mapConfig">Mapping configuration</param>
+            <param name="filePath">Parquet file path</param>
+            <returns>Parsed data</returns>
+        </member>
+        <member name="M:Parquet.Plus.ParquetDataEngine.Read``1(Parquet.Plus.Mapping.MapperConfig{``0},System.IO.Stream)">
+            <summary>
+            Reads data from parquet stream
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <param name="mapConfig">Mapping configuration</param>
+            <param name="fileStream">Parquet stream</param>
+            <returns>parsed data</returns>
+        </member>
+        <member name="M:Parquet.Plus.ParquetDataEngine.Write``1(Parquet.Plus.Mapping.MapperConfig{``0},System.String,``0[])">
+            <summary>
+            Writes data to parquet file
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <param name="mapConfig">Mapping configuration</param>
+            <param name="filePath">Parquet file path</param>
+            <param name="models">Models</param>
+        </member>
+        <member name="M:Parquet.Plus.ParquetDataEngine.Write``1(Parquet.Plus.Mapping.MapperConfig{``0},System.IO.Stream,``0[])">
+            <summary>
+            Writes data to parquet stream
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <param name="mapConfig">Mapping configuration</param>
+            <param name="fileStream">Parquet stream</param>
+            <param name="models">Models</param>
+        </member>
+        <member name="M:Parquet.Plus.ParquetDataEngine.Append``1(Parquet.Plus.Mapping.MapperConfig{``0},System.String,``0[])">
+            <summary>
+            Appends data to parquet file
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <param name="mapConfig">Mapping configuration</param>
+            <param name="filePath">Parquet file path</param>
+            <param name="models">Models</param>
+        </member>
+        <member name="M:Parquet.Plus.ParquetDataEngine.Append``1(Parquet.Plus.Mapping.MapperConfig{``0},System.IO.Stream,``0[])">
+            <summary>
+            Appends data to parquet stream
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+            <param name="mapConfig">Mapping configuration</param>
+            <param name="fileStream">Parquet stream</param>
+            <param name="models">Models</param>
+        </member>
+    </members>
+</doc>
