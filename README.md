@@ -26,7 +26,7 @@ var mapConfig = new MapperConfig<TestModel>()
       .MapProperty(x => x.Value, "VALUE");
 ```
 ### Mapping with different types
-If we have different types
+If we have different types between columns and properties
 ```csharp
 var mapConfig = new MapperConfig<TestModel2>()
       .MapProperty(x => x.IdStr, "ID", x => int.Parse(x.Split()[0]), x => x + " modified")
