@@ -18,15 +18,16 @@ First of all we need to make mapping configuration
 
 ### Direct mapping
 If we have the same types of data between columns and properties
-csharp
+
+```csharp
 var mapConfig = new MapperConfig<TestModel>()
       .MapProperty(x => x.Id, "ID")
       .MapProperty(x => x.Name, "NAME")
       .MapProperty(x => x.Value, "VALUE");
-
+```
 ### Mapping with different types
 If we have different types
-csharp
+```csharp
 var mapConfig = new MapperConfig<TestModel2>()
       .MapProperty(x => x.IdStr, "ID", x => int.Parse(x.Split()[0]), x => x + " modified")
       .MapProperty(x => x.NameInt, "NAME", IntToStr, StrToInt)
@@ -41,20 +42,21 @@ private string IntToStr(int x)
 {
     return $"Name is {x}";
 }
-
+```
 ## Reading
 If we have a file
-csharp
+```csharp
 var parquerEngine = new ParquetDataEngine();
 var data = parquerEngine.Read(mapConfig, "test.parquet");
+```
 If we have a stream
-csharp
+```csharp
 var parquerEngine = new ParquetDataEngine();
 var data = parquerEngine.Read(mapConfig, parquetStream);
-
+```
 ## Writing
 We can write data to file or stream
-csharp
+```csharp
 var parquetEngine = new ParquetDataEngine();
 
 // We can use a file
@@ -62,9 +64,10 @@ parquetEngine.Write(mapConfig, "test.parquet", testData);
 
 // Or we can use a stream
 // parquetEngine.Write(mapConfig, parquetStream, testData);
-
+```
 ## Appending
 We can append data to new row group
-csharp
+```csharp
 var parquetEngine = new ParquetDataEngine();
 parquetEngine.Append(mapConfig, "test.parquet", data);
+```
