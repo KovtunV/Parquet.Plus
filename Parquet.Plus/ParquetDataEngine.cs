@@ -15,7 +15,7 @@ namespace Parquet.Plus
         /// </summary>
         public ParquetDataEngine()
         {
-            
+            //
         }
 
         #region Read
