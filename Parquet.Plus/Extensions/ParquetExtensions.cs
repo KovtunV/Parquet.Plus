@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Parquet.Plus.Exceptions;
 
 namespace Parquet.Plus.Extensions
 {
@@ -20,9 +21,12 @@ namespace Parquet.Plus.Extensions
         {
             var parameterProperty = Expression.Parameter(typeof(TProperty));
 
-            var member = (MemberExpression)propertySelector.Body; // todo: add check type MemberExpression
-            var memberExpression = (ParameterExpression)member.Expression;
+            if (!(propertySelector.Body is MemberExpression member))
+            {
+                throw new PropertySelectorException();
+            }
 
+            var memberExpression = (ParameterExpression)member.Expression;
             var assignExp = Expression.Assign(member, parameterProperty);
             var lambda = Expression.Lambda<Action<TModel, TProperty>>(assignExp, memberExpression, parameterProperty);
             return lambda.Compile();
@@ -54,9 +58,12 @@ namespace Parquet.Plus.Extensions
         /// <returns>Getter method from property to column</returns>
         public static Func<TModel, TProperty> BuildGetter<TModel, TProperty>(this Expression<Func<TModel, TProperty>> propertySelector)
         {
-            var member = (MemberExpression)propertySelector.Body; // todo: add check type memberExpression
-            var memberExpression = (ParameterExpression)member.Expression;
+            if (!(propertySelector.Body is MemberExpression member))
+            {
+                throw new PropertySelectorException();
+            }
 
+            var memberExpression = (ParameterExpression)member.Expression;
             var lambda = Expression.Lambda<Func<TModel, TProperty>>(member, memberExpression);
             return lambda.Compile();
         }

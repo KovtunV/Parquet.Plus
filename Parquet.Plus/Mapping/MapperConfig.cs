@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Parquet.Plus.Events;
 
 namespace Parquet.Plus.Mapping
 {
@@ -71,15 +72,15 @@ namespace Parquet.Plus.Mapping
         /// <param name="models">Target models</param>
         /// <param name="dataColumn">Parquet column with data</param>
         /// <param name="modelOffset">Model offset, for multiple row groups</param>
-        public void MapFromColumn(TModel[] models, DataColumn dataColumn, long modelOffset)
+        public bool TryMapFromColumn(TModel[] models, DataColumn dataColumn, long modelOffset)
         {
             if (!_mapDict.TryGetValue(dataColumn.Field.Name.ToUpperInvariant(), out var propertyMapper))
             {
-                // todo: settings to silent job or exception
-                throw new Exception($"I have no idea how to map a column \"{dataColumn.Field.Name}\"");
+                return false;
             }
 
             propertyMapper.Map(models, dataColumn, modelOffset);
+            return true;
         }
 
         /// <summary>

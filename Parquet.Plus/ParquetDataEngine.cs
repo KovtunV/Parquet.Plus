@@ -1,7 +1,9 @@
-﻿using Parquet.Data;
+﻿using System;
+using Parquet.Data;
 using Parquet.Plus.Mapping;
 using System.IO;
 using System.Linq;
+using Parquet.Plus.Events;
 
 namespace Parquet.Plus
 {
@@ -15,7 +17,7 @@ namespace Parquet.Plus
         /// </summary>
         public ParquetDataEngine()
         {
-            //
+
         }
 
         #region Read
@@ -68,7 +70,11 @@ namespace Parquet.Plus
             for (int i = 0; i < columns.Length; i++)
             {
                 var column = columns[i];
-                mapConfig.MapFromColumn(models, column, modelOffset);
+                
+                if (!mapConfig.TryMapFromColumn(models, column, modelOffset))
+                {
+                    OnInvalidColumn($"I have no idea how to map the column \"{column.Field.Name}\"");
+                }
             }
         }
 
@@ -156,6 +162,21 @@ namespace Parquet.Plus
         public void Append<TModel>(MapperConfig<TModel> mapConfig, Stream fileStream, params TModel[] models)
         {
             OnWrite(mapConfig, fileStream, isAppend: true, models);
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Event when I don't have the column map info
+        /// </summary>
+        public event EventHandler<InvalidColumnEventArgs> InvalidColumn;
+
+        private void OnInvalidColumn(string message)
+        {
+            var args = new InvalidColumnEventArgs(message);
+            InvalidColumn?.Invoke(this, args);
         }
 
         #endregion

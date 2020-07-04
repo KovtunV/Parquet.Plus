@@ -2,15 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>1.0.3</Version>
+    <Version>1.1.0</Version>
     <Authors>kovtunv</Authors>
     <Description>Provides reading and writing Parquet file</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/KovtunV/Parquet.Plus</PackageProjectUrl>
     <RepositoryUrl>https://github.com/KovtunV/Parquet.Plus</RepositoryUrl>
-    <PackageTags>parquet</PackageTags>
-    <PackageReleaseNotes>Include documentation to Release</PackageReleaseNotes>
+    <PackageTags>parquet, core, c#</PackageTags>
+    <PackageReleaseNotes>- added an exception to property selector
+- removed an exception with partial mapping, instead of that, added an event with an invalid column info</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -27,7 +27,6 @@ namespace Parquet.Plus.Tests
 
         [DataTestMethod]
         [DataRow(10)]
-        [DataRow(1000)]
         public void WriteReadTest(int count)
         {
             var data = CreateModels(count);
@@ -51,7 +50,6 @@ namespace Parquet.Plus.Tests
 
         [DataTestMethod]
         [DataRow(10)]
-        [DataRow(1000)]
         public void AppendReadTest(int count)
         {
             var data1 = CreateModels(count);
@@ -80,7 +78,6 @@ namespace Parquet.Plus.Tests
 
         [DataTestMethod]
         [DataRow(10)]
-        [DataRow(1000)]
         public void ReadDifferentTypesTest(int count)
         {
             var data = CreateModels(count);
@@ -98,7 +95,6 @@ namespace Parquet.Plus.Tests
 
         [DataTestMethod]
         [DataRow(10)]
-        [DataRow(1000)]
         public void WriteDifferentTypesTest(int count)
         {
             var data = CreateModels2(count);
@@ -117,6 +113,28 @@ namespace Parquet.Plus.Tests
             {
                 Assert.IsTrue(data[i].MyEquals(readedData[i]), $"Data with id \"{data[i].IdStr}\" aren't equal");
             }
+        }
+
+        [DataTestMethod]
+        [DataRow(10)]
+        public void InvalidColumn(int count)
+        {
+            var data = CreateModels(count);
+
+            // write
+            using var stream = new MemoryStream();
+            _dataEngine.Write(_mapConfig1, stream, data);
+
+            // config without property map
+            var partConfig = new MapperConfig<TestModel>().MapProperty(x => x.Value, "VALUE");
+
+            // read data
+            var invalidCount = 0;
+            _dataEngine.InvalidColumn += (s, e) => invalidCount++;
+            var readedData = _dataEngine.Read(partConfig, stream);
+
+            // check
+            Assert.AreEqual(2, invalidCount);
         }
 
         #region Utils

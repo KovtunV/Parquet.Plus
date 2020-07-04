@@ -4,6 +4,32 @@
         <name>Parquet.Plus</name>
     </assembly>
     <members>
+        <member name="T:Parquet.Plus.Events.InvalidColumnEventArgs">
+            <summary>
+            Invalid column arguments
+            </summary>
+        </member>
+        <member name="P:Parquet.Plus.Events.InvalidColumnEventArgs.Message">
+            <summary>
+            The message with invalid column
+            </summary>
+        </member>
+        <member name="M:Parquet.Plus.Events.InvalidColumnEventArgs.#ctor(System.String)">
+            <summary>
+            Invalid column arguments
+            </summary>
+            <param name="message">The message with invalid column</param>
+        </member>
+        <member name="T:Parquet.Plus.Exceptions.PropertySelectorException">
+            <summary>
+            Exception when I'm trying make model's property setter/getter
+            </summary>
+        </member>
+        <member name="M:Parquet.Plus.Exceptions.PropertySelectorException.#ctor">
+            <summary>
+            Exception when I'm trying make model's property setter/getter
+            </summary>
+        </member>
         <member name="T:Parquet.Plus.Extensions.ParquetExtensions">
             <summary>
             Parquet extensions
@@ -81,7 +107,7 @@
             <param name="mapperToProperty">Mapper from column to property</param>
             <returns>Itself</returns>
         </member>
-        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.MapFromColumn(`0[],Parquet.Data.DataColumn,System.Int64)">
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.TryMapFromColumn(`0[],Parquet.Data.DataColumn,System.Int64)">
             <summary>
             Writes info from column to models
             </summary>
@@ -159,6 +185,11 @@
             <param name="mapConfig">Mapping configuration</param>
             <param name="fileStream">Parquet stream</param>
             <param name="models">Models</param>
+        </member>
+        <member name="E:Parquet.Plus.ParquetDataEngine.InvalidColumn">
+            <summary>
+            Event when I don't have the column map info
+            </summary>
         </member>
     </members>
 </doc>
