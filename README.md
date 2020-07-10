@@ -8,7 +8,7 @@ Provides reading and writing Parquet file
    * [Mapping configuration](#Mapping-configuration)
       * [Direct mapping](#Direct-mapping)
       * [Mapping with different types](#Mapping-with-different-types)
-      * [Mapping from an Interface IDifferentTypesMapper<TProperty, TColumn>](#Mapping-from-an-Interface-IDifferentTypesMapper<TProperty, TColumn>)
+      * [Mapping from an interface](#Mapping-from-an-interface)
    * [Reading](#Reading)
    * [Writing](#Writing)
    * [Appending](#Appending)
@@ -44,7 +44,7 @@ private string IntToStr(int x)
     return $"Name is {x}";
 }
 ```
-### Mapping from an Interface IDifferentTypesMapper<TProperty, TColumn>
+### Mapping from an interface
 We can use a special class to map types. For instance, a Parquet.Net doesn't know about a type *DateTime* it uses *DateTimeOffset* so we can use:
 ```csharp
 var mapConfig = new MapperConfig<TestModel3>()
