@@ -1,7 +1,8 @@
 # Parquet.Plus 
 
-[![NuGet version (Parquet.Plus)](https://img.shields.io/nuget/v/Parquet.Plus.svg?style=flat-square)](https://www.nuget.org/packages/Parquet.Plus/)
+[![NuGet version (Parquet.Plus)](https://img.shields.io/nuget/v/Parquet.Plus.svg?style=flat-square)](https://www.nuget.org/packages/Parquet.Plus)
 [![Build Status](https://travis-ci.org/KovtunV/Parquet.Plus.svg?branch=master)](https://travis-ci.org/KovtunV/Parquet.Plus)
+[![NuGet Download](https://img.shields.io/nuget/dt/Parquet.Plus.svg?style=flat-square)](https://www.nuget.org/packages/Parquet.Plus)
 
 Provides reading and writing Parquet file 
 
