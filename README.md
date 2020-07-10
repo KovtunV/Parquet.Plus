@@ -48,8 +48,7 @@ private string IntToStr(int x)
 We can use a special class to map types. For instance, a Parquet.Net doesn't know about a type *DateTime* it uses *DateTimeOffset* so we can use:
 ```csharp
 var mapConfig = new MapperConfig<TestModel3>()
-           .MapProperty(x => x.DateValue, "DATE", DefaultMappers.DateTimeOffsetToDateTime)
-           .MapProperty(x => x.BoolValue, "BOOL_VAL", DefaultMappers.IntToBool);
+           .MapProperty(x => x.DateValue, "DATE", DefaultMappers.DateTimeOffsetToDateTime);
 ```
 Furthermore, you can use custom mappers, who implement an Interface IDifferentTypesMapper<TProperty, TColumn>.
 ## Reading
