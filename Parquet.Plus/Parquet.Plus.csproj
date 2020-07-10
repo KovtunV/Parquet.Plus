@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>kovtunv</Authors>
     <Description>Provides reading and writing Parquet file</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/KovtunV/Parquet.Plus</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/KovtunV/Parquet.Plus</RepositoryUrl>
+    <RepositoryUrl>https://github.com/KovtunV/Parquet.Plus.git</RepositoryUrl>
     <PackageTags>parquet, core, c#</PackageTags>
-    <PackageReleaseNotes>- added an exception to property selector
-- removed an exception with partial mapping, instead of that, added an event with an invalid column info</PackageReleaseNotes>
+    <PackageReleaseNotes>- added an Interface for mapper
+- added default mappers Parquet.Plus.Mapping.DifferentTypes.DefaultMappers. You can use it to map int to bool, DateTime to DateTimeOffset, etc.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>

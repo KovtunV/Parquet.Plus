@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Parquet.Plus.Tests.Models
+﻿namespace Parquet.Plus.Tests.Models
 {
     public class TestModel2
     {

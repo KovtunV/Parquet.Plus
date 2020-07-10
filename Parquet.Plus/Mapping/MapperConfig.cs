@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Parquet.Plus.Events;
+using Parquet.Plus.Mapping.DifferentTypes;
 
 namespace Parquet.Plus.Mapping
 {
@@ -40,6 +40,25 @@ namespace Parquet.Plus.Mapping
             AddToMapper(mapConfig);
 
             return this;
+        }
+
+        /// <summary>
+        /// Adds property mapping info with different types
+        /// </summary>
+        /// <typeparam name="TProperty">Type of property</typeparam>
+        /// <typeparam name="TColumn">Type of column</typeparam>
+        /// <param name="propertySelector">Target property selector</param>
+        /// <param name="columnName">Column name</param>
+        /// <param name="typesMapper">Types mapper</param>
+        /// <returns>Itself</returns>
+        public MapperConfig<TModel> MapProperty<TProperty, TColumn>(Expression<Func<TModel, TProperty>> propertySelector, string columnName, IDifferentTypesMapper<TProperty, TColumn> typesMapper)
+        {
+            if (typesMapper == null)
+            {
+                throw new ArgumentNullException(nameof(typesMapper));
+            }
+
+            return MapProperty(propertySelector, columnName, typesMapper.ToColumn, typesMapper.ToProperty);
         }
 
         /// <summary>

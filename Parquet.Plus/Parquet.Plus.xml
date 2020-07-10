@@ -75,6 +75,52 @@
             <param name="mapperToColumnExp">Mapper extension</param>
             <returns>Getter method from property to column</returns>
         </member>
+        <member name="T:Parquet.Plus.Mapping.DifferentTypes.DefaultMappers">
+            <summary>
+            Default mappers
+            </summary>
+        </member>
+        <member name="P:Parquet.Plus.Mapping.DifferentTypes.DefaultMappers.IntToBool">
+            <summary>
+            Map int column to bool property
+            </summary>
+        </member>
+        <member name="P:Parquet.Plus.Mapping.DifferentTypes.DefaultMappers.NullableIntToBool">
+            <summary>
+            Map nullable int column to bool property
+            </summary>
+        </member>
+        <member name="P:Parquet.Plus.Mapping.DifferentTypes.DefaultMappers.DateTimeOffsetToDateTime">
+            <summary>
+            Map dateTimeOffset column to DateTime property, takes LocalDateTime value
+            </summary>
+        </member>
+        <member name="P:Parquet.Plus.Mapping.DifferentTypes.DefaultMappers.NullableDateTimeOffsetToDateTime">
+            <summary>
+            Map nullable dateTimeOffset column to DateTime property, takes LocalDateTime value
+            </summary>
+        </member>
+        <member name="T:Parquet.Plus.Mapping.DifferentTypes.IDifferentTypesMapper`2">
+            <summary>
+            Interface for type mappers
+            </summary>
+            <typeparam name="TProperty">Type of model's proeprty</typeparam>
+            <typeparam name="TColumn">Type of column</typeparam>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.DifferentTypes.IDifferentTypesMapper`2.ToColumn(`0)">
+            <summary>
+            Converts a propertyItem to a columnItem
+            </summary>
+            <param name="item">item to convert</param>
+            <returns>TColumn item</returns>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.DifferentTypes.IDifferentTypesMapper`2.ToProperty(`1)">
+            <summary>
+            Converts a columnItem to a propertyItem
+            </summary>
+            <param name="item">item to convert</param>
+            <returns>TProperty item</returns>
+        </member>
         <member name="T:Parquet.Plus.Mapping.MapperConfig`1">
             <summary>
             Mapping config for properties
@@ -93,6 +139,17 @@
             <typeparam name="TProperty">Type of property, also column</typeparam>
             <param name="propertySelector">Target property selector</param>
             <param name="columnName">Column name</param>
+            <returns>Itself</returns>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.MapProperty``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String,Parquet.Plus.Mapping.DifferentTypes.IDifferentTypesMapper{``0,``1})">
+            <summary>
+            Adds property mapping info with different types
+            </summary>
+            <typeparam name="TProperty">Type of property</typeparam>
+            <typeparam name="TColumn">Type of column</typeparam>
+            <param name="propertySelector">Target property selector</param>
+            <param name="columnName">Column name</param>
+            <param name="typesMapper">Types mapper</param>
             <returns>Itself</returns>
         </member>
         <member name="M:Parquet.Plus.Mapping.MapperConfig`1.MapProperty``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String,System.Func{``0,``1},System.Func{``1,``0})">

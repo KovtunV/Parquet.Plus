@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Parquet.Plus;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Parquet.Plus.Mapping;
+using Parquet.Plus.Mapping.DifferentTypes;
 using Parquet.Plus.Tests.Models;
 
 namespace Parquet.Plus.Tests
@@ -16,6 +14,7 @@ namespace Parquet.Plus.Tests
         private ParquetDataEngine _dataEngine;
         private MapperConfig<TestModel> _mapConfig1;
         private MapperConfig<TestModel2> _mapConfig2;
+        private MapperConfig<TestModel3> _mapConfig3;
 
         [TestInitialize]
         public void Startup()
@@ -23,6 +22,7 @@ namespace Parquet.Plus.Tests
             _dataEngine = new ParquetDataEngine();
             _mapConfig1 = CreateMappConfig();
             _mapConfig2 = CreateMappConfig2();
+            _mapConfig3 = CreateMappConfig3();
         }
 
         [DataTestMethod]
@@ -137,6 +137,28 @@ namespace Parquet.Plus.Tests
             Assert.AreEqual(2, invalidCount);
         }
 
+        [DataTestMethod]
+        [DataRow(10)]
+        public void DefaultMappersCheck(int count)
+        {
+            var data = CreateModels3(count);
+
+           // write
+            using var stream = new MemoryStream();
+            _dataEngine.Write(_mapConfig3, stream, data);
+
+            // read data
+            var readedData = _dataEngine.Read(_mapConfig3, stream);
+
+            // check
+            Assert.AreEqual(data.Length, readedData.Length, "Arrays are different");
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                Assert.IsTrue(data[i].MyEquals(readedData[i]), $"Data with id \"{data[i].Id}\" aren't equal");
+            }
+        }
+
         #region Utils
 
         private MapperConfig<TestModel> CreateMappConfig()
@@ -165,6 +187,16 @@ namespace Parquet.Plus.Tests
             return $"Name is {x}";
         }
 
+        private MapperConfig<TestModel3> CreateMappConfig3()
+        {
+            return new MapperConfig<TestModel3>()
+                .MapProperty(x => x.Id, "ID")
+                .MapProperty(x => x.Name, "NAME")
+                .MapProperty(x => x.Value, "VALUE")
+                .MapProperty(x => x.DateValue, "DATE", DefaultMappers.DateTimeOffsetToDateTime)
+                .MapProperty(x => x.BoolValue, "BOOL_VAL", DefaultMappers.IntToBool);
+        }
+
         private TestModel[] CreateModels(int count)
         {
             return Enumerable.Range(1, count).Select(i => new TestModel(i, $"Name is {i}", i * 1.56)).ToArray();
@@ -173,6 +205,20 @@ namespace Parquet.Plus.Tests
         private TestModel2[] CreateModels2(int count)
         {
             return Enumerable.Range(1, count).Select(i => new TestModel2(i + " modified", i.ToString().Length, i * 12)).ToArray();
+        }
+
+        private TestModel3[] CreateModels3(int count)
+        {
+            var now = DateTime.Now;
+
+            return Enumerable.Range(1, count).Select(i => new TestModel3
+            {
+                Id = i,
+                Name = $"Name is {i}",
+                Value = i * 1.56,
+                BoolValue = i % 2 == 0,
+                DateValue = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Millisecond).AddMinutes(i)
+            }).ToArray();
         }
 
         #endregion
