@@ -164,20 +164,57 @@
             <param name="mapperToProperty">Mapper from column to property</param>
             <returns>Itself</returns>
         </member>
-        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.TryMapFromColumn(`0[],Parquet.Data.DataColumn,System.Int64)">
-            <summary>
-            Writes info from column to models
-            </summary>
-            <param name="models">Target models</param>
-            <param name="dataColumn">Parquet column with data</param>
-            <param name="modelOffset">Model offset, for multiple row groups</param>
-        </member>
         <member name="M:Parquet.Plus.Mapping.MapperConfig`1.ToDataColumns(`0[])">
             <summary>
             Makes parquet columns from models
             </summary>
             <param name="models">Models with data</param>
             <returns>Parquet columns</returns>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.Contains(System.String)">
+            <summary>
+            Contains column name in configs
+            </summary>
+            <param name="columnName">column name</param>
+            <returns>bool if contains</returns>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperConfig`1.GetPropertyConfigs">
+            <summary>
+            Returns property configs
+            </summary>
+            <returns>Property configs</returns>
+        </member>
+        <member name="T:Parquet.Plus.Mapping.MapperPropertyConfig`1">
+            <summary>
+            Configuration for property mapping
+            </summary>
+            <typeparam name="TModel">Type of model</typeparam>
+        </member>
+        <member name="P:Parquet.Plus.Mapping.MapperPropertyConfig`1.ColumnName">
+            <summary>
+            Upper invariant column name
+            </summary>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperPropertyConfig`1.#ctor(System.String)">
+            <summary>
+            Configuration for property mapping
+            </summary>
+            <param name="columnName">Column name</param>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperPropertyConfig`1.Map(`0[],Parquet.Data.DataColumn,System.Int64)">
+            <summary>
+            Map data from column to models
+            </summary>
+            <param name="models">Models</param>
+            <param name="dataColumn">Parquet column</param>
+            <param name="modelOffset">Model offset</param>
+        </member>
+        <member name="M:Parquet.Plus.Mapping.MapperPropertyConfig`1.ToDataColumn(`0[])">
+            <summary>
+            Makes parquet column from models
+            </summary>
+            <param name="models">Models</param>
+            <returns>Parquet column</returns>
         </member>
         <member name="T:Parquet.Plus.ParquetDataEngine">
             <summary>

@@ -86,23 +86,6 @@ namespace Parquet.Plus.Mapping
         }
 
         /// <summary>
-        /// Writes info from column to models
-        /// </summary>
-        /// <param name="models">Target models</param>
-        /// <param name="dataColumn">Parquet column with data</param>
-        /// <param name="modelOffset">Model offset, for multiple row groups</param>
-        public bool TryMapFromColumn(TModel[] models, DataColumn dataColumn, long modelOffset)
-        {
-            if (!_mapDict.TryGetValue(dataColumn.Field.Name.ToUpperInvariant(), out var propertyMapper))
-            {
-                return false;
-            }
-
-            propertyMapper.Map(models, dataColumn, modelOffset);
-            return true;
-        }
-
-        /// <summary>
         /// Makes parquet columns from models
         /// </summary>
         /// <param name="models">Models with data</param>
@@ -119,6 +102,25 @@ namespace Parquet.Plus.Mapping
             }
 
             return dataColumns;
+        }
+
+        /// <summary>
+        /// Contains column name in configs
+        /// </summary>
+        /// <param name="columnName">column name</param>
+        /// <returns>bool if contains</returns>
+        public bool Contains(string columnName)
+        {
+            return _mapDict.ContainsKey(columnName.ToUpperInvariant());
+        }
+
+        /// <summary>
+        /// Returns property configs
+        /// </summary>
+        /// <returns>Property configs</returns>
+        public MapperPropertyConfig<TModel>[] GetPropertyConfigs()
+        {
+            return _mapDict.Select(s => s.Value).ToArray();
         }
 
         private void AddToMapper(MapperPropertyConfig<TModel> config)

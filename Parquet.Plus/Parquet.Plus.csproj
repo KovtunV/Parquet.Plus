@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <Authors>kovtunv</Authors>
     <Description>Provides reading and writing Parquet file</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/KovtunV/Parquet.Plus</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/KovtunV/Parquet.Plus.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/KovtunV/Parquet.Plus</RepositoryUrl>
     <PackageTags>parquet, core, c#</PackageTags>
-    <PackageReleaseNotes>- added an Interface for mapper
-- added default mappers Parquet.Plus.Mapping.DifferentTypes.DefaultMappers. You can use it to map int to bool, DateTime to DateTimeOffset, etc.</PackageReleaseNotes>
+    <PackageReleaseNotes>- Changed read logic: now It reads columns from the MapperConfig only. You should read only needed columns to be faster
+- Changed invalid column event logic: now it will raise if the column from config doesn't exist in parquet</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>

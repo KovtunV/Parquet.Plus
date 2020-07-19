@@ -54,8 +54,8 @@ namespace Parquet.Plus
             for (int i = 0; i < parquetReader.RowGroupCount; i++)
             {
                 using var groupReader = parquetReader.OpenRowGroupReader(i);
-                var columns = dataFields.Select(groupReader.ReadColumn).ToArray();
-
+                var columns = dataFields.Where(w => mapConfig.Contains(w.Name)).Select(groupReader.ReadColumn).ToArray();
+                
                 ReadColumns(mapConfig, resArr, columns, modelOffset);
 
                 // increment offset to read next rowGroup
@@ -67,14 +67,18 @@ namespace Parquet.Plus
 
         private void ReadColumns<TModel>(MapperConfig<TModel> mapConfig, TModel[] models, DataColumn[] columns, long modelOffset)
         {
-            for (int i = 0; i < columns.Length; i++)
+            var expectedPropertyConfigs = mapConfig.GetPropertyConfigs();
+
+            foreach (var expectedPropertyConfig in expectedPropertyConfigs)
             {
-                var column = columns[i];
-                
-                if (!mapConfig.TryMapFromColumn(models, column, modelOffset))
+                var column = columns.FirstOrDefault(f => expectedPropertyConfig.ColumnName.Equals(f.Field.Name.ToUpperInvariant()));
+                if (column is null)
                 {
-                    OnInvalidColumn($"I have no idea how to map the column \"{column.Field.Name}\"");
+                    OnInvalidColumn($"Column \"{expectedPropertyConfig}\" doesn't exist in parquet");
+                    continue;
                 }
+
+                expectedPropertyConfig.Map(models, column, modelOffset);
             }
         }
 

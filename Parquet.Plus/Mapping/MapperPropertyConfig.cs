@@ -3,16 +3,39 @@ using System;
 
 namespace Parquet.Plus.Mapping
 {
-    internal abstract class MapperPropertyConfig<TModel>
+    /// <summary>
+    /// Configuration for property mapping
+    /// </summary>
+    /// <typeparam name="TModel">Type of model</typeparam>
+    public abstract class MapperPropertyConfig<TModel>
     {
+        /// <summary>
+        /// Upper invariant column name
+        /// </summary>
         public string ColumnName { get; }
 
+        /// <summary>
+        /// Configuration for property mapping
+        /// </summary>
+        /// <param name="columnName">Column name</param>
         protected MapperPropertyConfig(string columnName)
         {
             ColumnName = columnName.ToUpperInvariant();
         }
 
+        /// <summary>
+        /// Map data from column to models
+        /// </summary>
+        /// <param name="models">Models</param>
+        /// <param name="dataColumn">Parquet column</param>
+        /// <param name="modelOffset">Model offset</param>
         public abstract void Map(TModel[] models, DataColumn dataColumn, long modelOffset);
+
+        /// <summary>
+        /// Makes parquet column from models
+        /// </summary>
+        /// <param name="models">Models</param>
+        /// <returns>Parquet column</returns>
         public abstract DataColumn ToDataColumn(TModel[] models);
     }
 

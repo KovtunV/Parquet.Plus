@@ -125,8 +125,11 @@ namespace Parquet.Plus.Tests
             using var stream = new MemoryStream();
             _dataEngine.Write(_mapConfig1, stream, data);
 
-            // config without property map
-            var partConfig = new MapperConfig<TestModel>().MapProperty(x => x.Value, "VALUE");
+            // config with wrong property map
+            var partConfig = new MapperConfig<TestModel>()
+                    .MapProperty(x => x.Value, "VALUE_NO1")
+                    .MapProperty(x => x.Value, "VALUE_NO2")
+                    .MapProperty(x => x.Value, "VALUE");
 
             // read data
             var invalidCount = 0;
