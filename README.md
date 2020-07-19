@@ -1,6 +1,8 @@
 # Parquet.Plus 
 
 [![Build Status](https://travis-ci.org/KovtunV/Parquet.Plus.svg?branch=master)](https://travis-ci.org/KovtunV/Parquet.Plus)
+[![NuGet version (Parquet.Plus)](https://img.shields.io/nuget/v/Parquet.Plus.svg?style=flat-square)](https://www.nuget.org/packages/Parquet.Plus)
+[![NuGet Download](https://img.shields.io/nuget/dt/Parquet.Plus.svg?style=flat-square)](https://www.nuget.org/packages/Parquet.Plus)
 
 Provides reading and writing Parquet file 
 
@@ -8,6 +10,7 @@ Provides reading and writing Parquet file
    * [Mapping configuration](#Mapping-configuration)
       * [Direct mapping](#Direct-mapping)
       * [Mapping with different types](#Mapping-with-different-types)
+      * [Mapping from an interface](#Mapping-from-an-interface)
    * [Reading](#Reading)
    * [Writing](#Writing)
    * [Appending](#Appending)
@@ -43,6 +46,13 @@ private string IntToStr(int x)
     return $"Name is {x}";
 }
 ```
+### Mapping from an interface
+We can use a special class to map types. For instance, a Parquet.Net doesn't know about a type *DateTime* it uses *DateTimeOffset* so we can use:
+```csharp
+var mapConfig = new MapperConfig<TestModel3>()
+           .MapProperty(x => x.DateValue, "DATE", DefaultMappers.DateTimeOffsetToDateTime);
+```
+Furthermore, you can use custom mappers, who implement an Interface IDifferentTypesMapper<TProperty, TColumn>.
 ## Reading
 If we have a file
 ```csharp
