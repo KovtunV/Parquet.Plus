@@ -118,7 +118,7 @@ namespace Parquet.Plus.Mapping
         /// Returns property configs
         /// </summary>
         /// <returns>Property configs</returns>
-        public MapperPropertyConfig<TModel>[] GetPropertyConfigs()
+        internal MapperPropertyConfig<TModel>[] GetPropertyConfigs()
         {
             return _mapDict.Select(s => s.Value).ToArray();
         }

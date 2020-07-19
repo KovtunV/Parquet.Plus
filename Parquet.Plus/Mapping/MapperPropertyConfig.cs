@@ -7,7 +7,7 @@ namespace Parquet.Plus.Mapping
     /// Configuration for property mapping
     /// </summary>
     /// <typeparam name="TModel">Type of model</typeparam>
-    public abstract class MapperPropertyConfig<TModel>
+    internal abstract class MapperPropertyConfig<TModel>
     {
         /// <summary>
         /// Upper invariant column name
